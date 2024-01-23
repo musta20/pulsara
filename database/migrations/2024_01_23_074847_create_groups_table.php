@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('status')->default(Status::Public->value);
             $table->json('tags')->nullable();
 
-            $table->unsigendBigInteger('members')->default(0);
+            $table->unsignedBigInteger('members')->default(0);
 
             $table->foreignUlid('user_id')
                 ->comment('Admin User Id')
