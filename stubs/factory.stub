@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 final class {{ factory }}Factory extends Factory
 {
-    protected $model = {{factory}}Factory extends Factory
+    protected $model = {{ Model }}::class;
     /**
      * Define the model's default state.
      *
