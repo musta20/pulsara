@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_type=1);
+declare(strict_types=1);
 
 namespace {{ factoryNamespace }};
 
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 final class {{ factory }}Factory extends Factory
 {
-    protected $model = {{ Model }}::class;
+    protected $model = {{ factory }}::class;
     /**
      * Define the model's default state.
      *

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string @id
@@ -24,8 +25,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property null|CarbonInterface $created_at
  * @property null|CarbonInterface $updated_at
  * @property User $user
+ * @property Collection<Post> $post
  */
- 
+
 final class Group extends Model
 {
     use HasFactory;
@@ -43,21 +45,24 @@ final class Group extends Model
     ];
 
     protected $casts = [
-        'status'=>Status::class,
-        'members'=>'integer',
-        'tags'=>AsCollection::class
+        'status' => Status::class,
+        'members' => 'integer',
+        'tags' => AsCollection::class
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(
-            related:User::class,
-            foreignKey:'user_id'
+            related: User::class,
+            foreignKey: 'user_id'
         );
     }
 
-
-
-
-
+    public function posts(): HasMany
+    {
+        return $this->hasMany(
+            related: Post::class,
+            foreignKey: 'group_id'
+        );
+    }
 }

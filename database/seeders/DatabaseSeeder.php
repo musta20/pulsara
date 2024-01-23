@@ -7,7 +7,9 @@ namespace Database\Seeders;
 use App\Enums\Identity\Provider;
 use App\Enums\Identity\Role;
 use App\Enums\Publishing\Status;
+use App\Enums\Stage\Stage;
 use App\Models\Group;
+use App\Models\Post;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -20,27 +22,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-     $user =  User::factory()->create([
-            'first_name'=>'mustafa',
-            'last_name'=>'osman',
-            'email'=>'saif.muh2020@gmail.com',
-            'password'=>Hash::make('2486'),
-            'role'=>Role::Admin,
-            'provider'=>Provider::Email,
-            'avatar'=>'https://github.com/musta20.png'
+        $user =  User::factory()->create([
+            'first_name' => 'mustafa',
+            'last_name' => 'osman',
+            'email' => 'saif.muh2020@gmail.com',
+            'password' => Hash::make('2486'),
+            'role' => Role::Admin,
+            'provider' => Provider::Email,
+            'avatar' => 'https://github.com/musta20.png'
         ]);
 
-        Profile::factory()->for($user)
-        ->create([
-            'handle'=>'musta20',
-            'country'=>'eg',
+        $profile =  Profile::factory()->for($user)
+            ->create([
+                'handle' => 'musta20',
+                'country' => 'eg',
+            ]);
+
+        $group =  Group::factory()->for($user)->create([
+            'name' => 'feed',
+            'description' => 'The deafult news feed group,',
+            'status' => Status::Verified,
+        ]);
+        Post::factory()->for($group)->for($profile)->count(10)->create([
+            'stage'=>Stage::Approved
         ]);
 
-        Group::factory()->for($user)->create([
-            'name'=>'feed',
-            'description'=> 'The deafult news feed group,',
-            'status'=>Status::Verified,
-        ]);
+
+
+
+
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
