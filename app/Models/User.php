@@ -10,6 +10,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property null|CarbonInterface $updated_at
  * @property null|CarbonInterface $deleted_at
  * @property Profile $profile
+ * @property Collection<Group> $ownedGroups
  */
 
 final class User extends Authenticatable implements MustVerifyEmail
@@ -80,6 +82,13 @@ final class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(
             related:Profile::class,
             foreignKey:'user_id',
+        );
+    }
+    public function ownedGroups(): HasMany
+    {
+        return $this->hasMany(
+            related:Group::class,
+            foreignKey:'user_id'
         );
     }
 
